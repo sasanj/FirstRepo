@@ -6,8 +6,8 @@
 	public class FirstUi {
 		public static void main(String[] args)
 		{
-			FirstUi n=new FirstUi();
-			n.SimpleUi();
+			FirstUi smplObject=new FirstUi();
+			smplObject.SimpleUi();
 		}
 
 		public void SimpleUi() {
@@ -46,9 +46,7 @@
 			frame.setBounds(30, 30, 600, 500);
 			frame.setTitle("FirstForm");
 			frame.setIconImage(img);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setVisible(true);
-			
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
 			
 			
 			frame.add(cPanel, BorderLayout.CENTER);
@@ -152,69 +150,9 @@
 			   }
 			 });
 			 
-			 
+		frame.setVisible(true);	 
 		}
-	}
-
-	//DataBase Connection	
-	 class DbConnection {
-
-	Connection conn=null;
-	Statement stmt=null;
-
-	try{
-			Class.forName("oracle.jdbc.driver.Oracledriver");
-			System.out.println("Connectig to database...");
-
-			conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl11" ,
-			"admin" , "admin");
-
-			System.out.println("Createing Statement...");
-			stmt=conn.createStatement();
-			ResultSet rs=stmt.executeQuery("Select kol_id , kol_name from acc_kol");
-
-			while(rs.next()){
-
-					String kol_id= rs.getString("kol_id");
-					String kol_name= rs.getString("kol_name");
-
-					System.out.println("kol_id: " + kol_id);
-					System.out.println(" ,kol_name: " + kol_name);
-
-					 }
-			rs.close();
-			stmt.close();
-			conn.close();
-
-		}
-
-	catch(SQLException se)
-	{ se.printStackTrace(); }
-	catch(Exception e){e.printStackTrace();}
-	finally{
-		   try{
-				if (stmt!=null)
-					stmt.close();
-			   }
-		   catch(SQLException se2){}
-		   try{
-				if (conn!=null) 
-					conn.close();}
-		   catch(SQLException se){
-				se.printStackTrace();}
-		   }
-	System.out.println("End...!");
-
+	
 	}
 
 
-	 /*class GBC extends GridBagConstraints{
-		 public GBC(int x, int y, int w, int h)
-		  {
-		  this.gridx = x;
-		  this.gridy = y;
-		  this.gridwidth = w;
-		  this.gridheight = h;
-		  }
-		
-	}*/
