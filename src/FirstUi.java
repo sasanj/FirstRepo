@@ -1,158 +1,137 @@
-	import javax.swing.*;
-	import java.awt.*;
-	import java.awt.event.ActionEvent;
-	import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-	public class FirstUi {
-		public static void main(String[] args)
-		{
-			FirstUi smplObject=new FirstUi();
-			smplObject.SimpleUi();
-		}
+public class FirstUi extends JFrame {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -6986710655595734041L;
+	private static final String imagesPath = "resource/image/";
+	private String names[] = { "Mrs Hoseini", "Ms Yousefi", "Mrs Bay" , "Mrs Abdolahi" };
+	private int current = -1; // this will force the fireCurrentChanged get
+							 // Fired in prepareForm
 
-		public void SimpleUi() {
-			JFrame frame=new JFrame();
-			JPanel cPanel=new JPanel(new FlowLayout());
-			JPanel wPanel=new JPanel(new FlowLayout());
-			
-			//GridBagLayout layout = new GridBagLayout();
-			
-			cPanel.setLayout(null);
-			
-			Image img = new ImageIcon("icon.jpg").getImage();
-			JTextField cod =new JTextField("'Code here'", 20);
-			JTextField desc =new JTextField("'Desc here'", 20);
-			
-			JButton nextbutton=new JButton(null, new ImageIcon("nxtrec.jpg"));
-			JButton backbutton=new JButton(null, new ImageIcon("prvrec.jpg"));
-			nextbutton.setToolTipText("Next");
-			backbutton.setToolTipText("Previous");
-			JLabel codelabel = new JLabel("Code: ");
-			JLabel desclabel = new JLabel("Description: ");
-			
-			
-			JComboBox<String> dataList=new JComboBox<>();
-			dataList.addItem("Mrs Hoseini");
-			dataList.addItem("Ms Yousefi");
-			dataList.addItem("Mrs Bay");
-		
-			
-			JToolBar toolbar = new JToolBar();
-			toolbar.add(nextbutton);
-			toolbar.addSeparator();
-			toolbar.add(backbutton);
-				
-				
-			frame.setBounds(30, 30, 600, 500);
-			frame.setTitle("FirstForm");
-			frame.setIconImage(img);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
-			
-			
-			frame.add(cPanel, BorderLayout.CENTER);
-			frame.add(wPanel, BorderLayout.WEST);
-			frame.add(toolbar, BorderLayout.NORTH);
-			
-
-			cPanel.add(cod );
-			cPanel.add(desc);
-			cPanel.add(codelabel);
-			cPanel.add(desclabel);
-			wPanel.add(dataList);
-			
-			cod.setBounds(200, 10, 100, 20);
-			desc.setBounds(200, 30, 100, 20);
-			codelabel.setBounds(100, 10, 80, 20);
-			desclabel.setBounds(100, 30, 80, 20);
-
-			
-			 dataList.addActionListener(new ActionListener()
-					 {
-					 public void actionPerformed(ActionEvent e)
-					   {
-			
-						 if (dataList.getSelectedItem() == "Mrs Hoseini") 
-						 {
-							 cod.setText("1");
-							 desc.setText("Mrs Hoseini");
-							 }
-							 
-						 else if (dataList.getSelectedItem() == "Ms Yousefi")
-						 {
-							 cod.setText("2");
-							 desc.setText("Ms Yousefi");
-						 }
-							 
-						 else if (dataList.getSelectedItem() == "Mrs Bay")
-						 {
-							 cod.setText("3");
-							 desc.setText("Mrs Bay"); 
-						 }	 
-					   }
-					 });
-			 
-			 
-			 
-			 nextbutton.addActionListener(new ActionListener()
-			 {
-			 public void actionPerformed(ActionEvent e)
-			   {
-
-				 if (dataList.getSelectedItem() == "Mrs Hoseini") 
-				 {   
-					 dataList.setSelectedItem("Ms Yousefi");
-					 cod.setText("2");
-					 desc.setText("Ms Yousefi");
-					 }
-					 
-				 else if (dataList.getSelectedItem() == "Ms Yousefi")
-				 {
-					 dataList.setSelectedItem("Mrs Bay");
-					 cod.setText("3");
-					 desc.setText("Mrs Bay");
-				 }
-					 
-				 else if (dataList.getSelectedItem() == "Mrs Bay")
-				 {
-					 dataList.setSelectedItem("Mrs Hoseini");
-					 cod.setText("1");
-					 desc.setText("Mrs Hoseini"); 
-				 }	 
-			   }
-			 }); 
-			
-			 
-			 backbutton.addActionListener(new ActionListener()
-			 {
-			 public void actionPerformed(ActionEvent e)
-			   {
-
-				 if (dataList.getSelectedItem() == "Mrs Hoseini") 
-				 {   
-					 dataList.setSelectedItem("Mrs Bay");
-					 cod.setText("3");
-					 desc.setText("Mrs Bay");
-					 }
-					 
-				 else if (dataList.getSelectedItem() == "Ms Yousefi")
-				 {
-					 dataList.setSelectedItem("Mrs Hoseini");
-					 cod.setText("1");
-					 desc.setText("Mrs Hoseini");
-				 }
-					 
-				 else if (dataList.getSelectedItem() == "Mrs Bay")
-				 {
-					 dataList.setSelectedItem("Ms Yousefi");
-					 cod.setText("2");
-					 desc.setText("Mrs Yousefi"); 
-				 }	 
-			   }
-			 });
-			 
-		frame.setVisible(true);	 
-		}
-	
+	public int getCurrent() {
+		return current;
 	}
 
+	public void setCurrent(int current) {
+		if (current >= 0 && current < names.length && this.current != current) {
+			int last = this.current;
+			this.current = current;
+			fireCurrentChanged(current, last);
+		}
+	}
 
+	private void fireCurrentChanged(int current, int last) {
+		if (cmbNames.getSelectedIndex() != current) {
+			cmbNames.setSelectedIndex(current);
+		}
+		txtCode.setText(String.valueOf(current));
+		txtDesc.setText(names[current]);
+	}
+
+	/*
+	 * The following are needed to keep track of the form.
+	 */
+	private JTextField txtCode;
+	private JTextField txtDesc;
+	private JComboBox<String> cmbNames;
+	private JList<String> lstNames;
+	private JButton btnNext;
+	private JButton btnPrev;
+
+	public static void main(String[] args) {
+		FirstUi firstUI = new FirstUi();
+		firstUI.pack();
+
+		firstUI.setVisible(true);
+		firstUI.setCurrent(2);
+	}
+
+	/**
+	 * prepares the form!
+	 */
+	private void prepareForm() {
+		txtCode.setEditable(false);
+		txtCode.setEnabled(false);
+		for (int x = 0; x < names.length; x++) {
+			cmbNames.addItem(names[x]);
+		}
+		cmbNames.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setCurrent(cmbNames.getSelectedIndex());
+			}
+
+		});
+		btnNext.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setCurrent(getCurrent() + 1);
+			}
+
+		});
+		btnPrev.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setCurrent(getCurrent() - 1);
+			}
+
+		});
+		setCurrent(0);
+	}
+
+	public FirstUi() {
+		JPanel cPanel = new JPanel(new FlowLayout());
+		JPanel wPanel = new JPanel(new FlowLayout());
+		// GridBagLayout layout = new GridBagLayout();
+
+		cPanel.setLayout(null);
+
+		Image img = new ImageIcon(imagesPath + "icon.jpg").getImage();
+		txtCode = new JTextField("-1", 20);
+		txtDesc = new JTextField("Nothing", 20);
+
+		btnNext = new JButton(null, new ImageIcon(imagesPath + "nxtrec.jpg"));
+		btnPrev = new JButton(null, new ImageIcon(imagesPath + "prvrec.jpg"));
+		btnNext.setToolTipText("Next");
+		btnPrev.setToolTipText("Previous");
+		JLabel lblCode = new JLabel("Code: ");
+		JLabel lblDesc = new JLabel("Description: ");
+
+		cmbNames = new JComboBox<String>();
+		lstNames = new JList<String>();
+
+		JToolBar toolbar = new JToolBar();
+		toolbar.add(btnNext);
+		toolbar.addSeparator();
+		toolbar.add(btnPrev);
+
+		this.setTitle("FirstForm");
+		this.setIconImage(img);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		cPanel.add(txtCode);
+		cPanel.add(txtDesc);
+		cPanel.add(lblCode);
+		cPanel.add(lblDesc);
+		wPanel.add(cmbNames);
+		wPanel.add(lstNames);
+
+		this.add(cPanel, BorderLayout.CENTER);
+		this.add(wPanel, BorderLayout.WEST);
+		this.add(toolbar, BorderLayout.NORTH);
+
+		txtCode.setBounds(200, 10, 100, 20);
+		txtDesc.setBounds(200, 30, 100, 20);
+		lblCode.setBounds(100, 10, 80, 20);
+		lblDesc.setBounds(100, 30, 80, 20);
+		prepareForm();
+	}
+}
