@@ -21,7 +21,7 @@ public class FirstUi extends JFrame {
 	}
 
 	public void setCurrent(int current) {
-		if (current >= 0 && current < names.length && this.current != current) {
+		if (current >= 0 && this.current != current) {
 			int last = this.current;
 			this.current = current;
 			fireCurrentChanged(current, last);
@@ -36,14 +36,17 @@ public class FirstUi extends JFrame {
 			lstNames.setSelectedIndex(current);
 		}
 		txtCode.setText(String.valueOf(current));
-		txtDesc.setText(names[current]);
+		txtName.setText(names[current]);
+		txtLastName.setText(lastNames[current]);
+		
 	}
 
 	/*
 	 * The following are needed to keep track of the form.
 	 */
 	private JTextField txtCode;
-	private JTextField txtDesc;
+	private JTextField txtName;
+	private JTextField txtLastName;
 	private JComboBox<String> cmbNames;
 	private JList<String> lstNames;
 	private JButton btnNext;
@@ -101,14 +104,16 @@ public class FirstUi extends JFrame {
 
 		Image img = new ImageIcon(imagesPath + "icon.jpg").getImage();
 		txtCode = new JTextField("-1", 20);
-		txtDesc = new JTextField("Nothing", 20);
+		txtName = new JTextField("Nothing", 20);
+		txtLastName = new JTextField("Nothing", 20);
 
 		btnNext = new JButton(null, new ImageIcon(imagesPath + "nxtrec.jpg"));
 		btnPrev = new JButton(null, new ImageIcon(imagesPath + "prvrec.jpg"));
 		btnNext.setToolTipText("Next");
 		btnPrev.setToolTipText("Previous");
 		JLabel lblCode = new JLabel("Code: ");
-		JLabel lblDesc = new JLabel("Description: ");
+		JLabel lblName = new JLabel("First Name: ");
+		JLabel lblLastName = new JLabel("Last Name: ");
 
 		cmbNames = new JComboBox<String>();
 		lstNames = new JList<String>(lastNames);
@@ -126,9 +131,11 @@ public class FirstUi extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		cPanel.add(txtCode);
-		cPanel.add(txtDesc);
+		cPanel.add(txtName);
+		cPanel.add(txtLastName);
 		cPanel.add(lblCode);
-		cPanel.add(lblDesc);
+		cPanel.add(lblName);
+		cPanel.add(lblLastName);
 		wPanel.add(cmbNames);
 		wPanel.add(scpane);
 
@@ -137,9 +144,11 @@ public class FirstUi extends JFrame {
 		this.add(toolbar, BorderLayout.NORTH);
 
 		txtCode.setBounds(200, 10, 100, 20);
-		txtDesc.setBounds(200, 30, 100, 20);
+		txtName.setBounds(200, 30, 100, 20);
+		txtLastName.setBounds(200, 50, 100, 20);
 		lblCode.setBounds(100, 10, 80, 20);
-		lblDesc.setBounds(100, 30, 80, 20);
+		lblName.setBounds(100, 30, 80, 20);
+		lblLastName.setBounds(100, 50, 80, 20);
 		prepareForm();
 	}
 	public static void main(String[] args) {
