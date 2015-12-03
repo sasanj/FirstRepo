@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class FirstUi extends JFrame {
 	/**
@@ -9,7 +11,8 @@ public class FirstUi extends JFrame {
 	 */
 	private static final long serialVersionUID = -6986710655595734041L;
 	private static final String imagesPath = "resource/image/";
-	private String names[] = { "Mrs Hoseini", "Ms Yousefi", "Mrs Bay" , "Mrs Abdolahi" };
+	private String names[] = { "Leila" , "Maryam" , "Sharareh" , "Ziba" };
+	private String lastNames[]={ "Hoseini", "Yousefi", "Bay" , "Abdolahi" };
 	private int current = -1; // this will force the fireCurrentChanged get
 							 // Fired in prepareForm
 
@@ -29,6 +32,9 @@ public class FirstUi extends JFrame {
 		if (cmbNames.getSelectedIndex() != current) {
 			cmbNames.setSelectedIndex(current);
 		}
+		if (lstNames.getSelectedIndex() != current) {
+			lstNames.setSelectedIndex(current);
+		}
 		txtCode.setText(String.valueOf(current));
 		txtDesc.setText(names[current]);
 	}
@@ -42,14 +48,7 @@ public class FirstUi extends JFrame {
 	private JList<String> lstNames;
 	private JButton btnNext;
 	private JButton btnPrev;
-
-	public static void main(String[] args) {
-		FirstUi firstUI = new FirstUi();
-		firstUI.pack();
-
-		firstUI.setVisible(true);
-		firstUI.setCurrent(2);
-	}
+	private JScrollPane scpane;
 
 	/**
 	 * prepares the form!
@@ -67,6 +66,12 @@ public class FirstUi extends JFrame {
 				setCurrent(cmbNames.getSelectedIndex());
 			}
 
+		});
+		lstNames.addListSelectionListener(new ListSelectionListener() {
+		       public void valueChanged(ListSelectionEvent e) {
+		    	       setCurrent(lstNames.getSelectedIndex());
+		    }
+				
 		});
 		btnNext.addActionListener(new ActionListener() {
 
@@ -106,7 +111,10 @@ public class FirstUi extends JFrame {
 		JLabel lblDesc = new JLabel("Description: ");
 
 		cmbNames = new JComboBox<String>();
-		lstNames = new JList<String>();
+		lstNames = new JList<String>(lastNames);
+		lstNames.setVisibleRowCount(3);
+		lstNames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                scpane=new JScrollPane(lstNames);
 
 		JToolBar toolbar = new JToolBar();
 		toolbar.add(btnNext);
@@ -122,7 +130,7 @@ public class FirstUi extends JFrame {
 		cPanel.add(lblCode);
 		cPanel.add(lblDesc);
 		wPanel.add(cmbNames);
-		wPanel.add(lstNames);
+		wPanel.add(scpane);
 
 		this.add(cPanel, BorderLayout.CENTER);
 		this.add(wPanel, BorderLayout.WEST);
@@ -133,5 +141,12 @@ public class FirstUi extends JFrame {
 		lblCode.setBounds(100, 10, 80, 20);
 		lblDesc.setBounds(100, 30, 80, 20);
 		prepareForm();
+	}
+	public static void main(String[] args) {
+		FirstUi firstUI = new FirstUi();
+		firstUI.pack();
+
+		firstUI.setVisible(true);
+		//firstUI.setCurrent(2);
 	}
 }
