@@ -32,8 +32,8 @@ public class FirstUi extends JFrame {
 		if (cmbNames.getSelectedIndex() != current) {
 			cmbNames.setSelectedIndex(current);
 		}
-		if (lstNames.getSelectedIndex() != current) {
-			lstNames.setSelectedIndex(current);
+		if (listNames.getSelectedIndex() != current) {
+			listNames.setSelectedIndex(current);
 		}
 		txtCode.setText(String.valueOf(current));
 		txtName.setText(names[current]);
@@ -48,7 +48,7 @@ public class FirstUi extends JFrame {
 	private JTextField txtName;
 	private JTextField txtLastName;
 	private JComboBox<String> cmbNames;
-	private JList<String> lstNames;
+	private JList<String> listNames;
 	private JButton btnNext;
 	private JButton btnPrev;
 	private JScrollPane scpane;
@@ -70,9 +70,9 @@ public class FirstUi extends JFrame {
 			}
 
 		});
-		lstNames.addListSelectionListener(new ListSelectionListener() {
+		listNames.addListSelectionListener(new ListSelectionListener() {
 		       public void valueChanged(ListSelectionEvent e) {
-		    	       setCurrent(lstNames.getSelectedIndex());
+		    	       setCurrent(listNames.getSelectedIndex());
 		    }
 				
 		});
@@ -116,10 +116,10 @@ public class FirstUi extends JFrame {
 		JLabel lblLastName = new JLabel("Last Name: ");
 
 		cmbNames = new JComboBox<String>();
-		lstNames = new JList<String>(lastNames);
-		lstNames.setVisibleRowCount(3);
-		lstNames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                scpane=new JScrollPane(lstNames);
+		listNames = new JList<String>(lastNames);
+		listNames.setVisibleRowCount(3);
+		listNames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                scpane=new JScrollPane(listNames);
 
 		JToolBar toolbar = new JToolBar();
 		toolbar.add(btnNext);
